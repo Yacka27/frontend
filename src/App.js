@@ -14,7 +14,7 @@ const App = ()=> {
         <Switch>
             <Route exact path='/' component= {MediaView}/>
             <Route exact path='/tipo' component= {TipoView}/>
-            <Route exact path='/directore' component= {DirectorView}/>
+            <Route exact path='/director' component= {DirectorView}/>
             <Route exact path='/productora' component= {ProductoraView}/>
             <Route exact path='/genero' component= {GeneroView}/>
             <Redirect to='/'/>
