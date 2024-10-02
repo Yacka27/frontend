@@ -44,14 +44,14 @@ export const MediaView = () => {
                       <div className="card-body">
                           <h5 className="card-title">Características</h5>
                           <hr />
-                          <p className="card-text">{`Serial: ${media.serial}`}</p>
-                          <p className="card-text">{`Marca: ${media.marca.nombre}`}</p>
-                          <p className="card-text">{`Descripcion: ${media.descripcion}`}</p>
-                          <p className="card-text">{`Marca: ${media.precio}`}</p>
-                          <p className="card-text">{`Usuario: ${media.usuario.nombre}`}</p>
-                          <p className="card-text">
-                              <Link to = {`medias/edit/${media._id}`}>Ver más...</Link>
-                          </p>
+                            <p className="card-text">{`Serial: ${media.serial}`}</p>
+                            <p className="card-text">{`Titulo: ${media.titulo}`}</p>
+                            <p className="card-text">{`UrlPeli: ${media.urlPeli}`}</p>
+                            <p className="card-text">{`Genero: ${media.genero}`}</p>
+                            <p className="card-text">{`Tipo: ${media.tipo}`}</p>
+                            <p className="card-text">
+                                <Link to = {`medias/edit/${media._id}`}>Ver más...</Link>
+                            </p>
                       </div>
                   </div>
               </div>
