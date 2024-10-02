@@ -49,6 +49,7 @@ export const MediaView = () => {
                             <p className="card-text">{`UrlPeli: ${media.urlPeli}`}</p>
                             <p className="card-text">{`Genero: ${media.genero}`}</p>
                             <p className="card-text">{`Tipo: ${media.tipo}`}</p>
+                            <p className="card-text">{`Sinopsis: ${media.sinopsis}`}</p>
                             <p className="card-text">
                                 <Link to = {`medias/edit/${media._id}`}>Ver más...</Link>
                             </p>
