@@ -1,6 +1,6 @@
 import { axiosInstance } from "../helper/axios-config";
 
-const getMedia = () => {
+const getMedias = () => {
     return axiosInstance.get('media', {
         header: {
             'Content-Type': 'application/json'
@@ -33,5 +33,5 @@ const getMediaPorId = (mediaId) => {
     });
 }
 
-export { actualizarMedia, crearMedia, getMedia, getMediaPorId };
+export { actualizarMedia, crearMedia, getMediaPorId, getMedias };
 
