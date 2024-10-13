@@ -1,19 +1,8 @@
-
-import React from 'react';
-
-export const GeneroView = () => {
-  return (
-    <div>
-      GeneroView
-    </div>
-  )
-}
-
-
 import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { actualizarGenero, crearGenero, getGenero } from '../../services/generoService';
 const moment = require('moment');
+
 
 export const GeneroView = () => {
 
