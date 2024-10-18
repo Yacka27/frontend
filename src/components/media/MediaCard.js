@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+ 
 
-const MediaCard = (props) => {
+export const MediaCard = (props) => {
     const { media } = props;
 
     return (
@@ -14,8 +15,6 @@ const MediaCard = (props) => {
                     <p className="card-text">{`Serial: ${media.serial}`}</p>
                     <p className="card-text">{`Titulo: ${media.titulo}`}</p>
                     <p className="card-text">{`UrlPeli: ${media.urlPeli}`}</p>
-                    <p className="card-text">{`Genero: ${media.genero}`}</p>
-                    <p className="card-text">{`Tipo: ${media.tipo.nombre}`}</p>
                     <p className="card-text">
                         <Link to={`medias/edit/${media._id}`}>Ver más...</Link>
                     </p>

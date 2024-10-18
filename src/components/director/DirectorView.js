@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { actualizarDirector, crearDirector, getDirector } from '../../services/directorService';
+
 const moment = require('moment');
 
 export const DirectorView = () => {

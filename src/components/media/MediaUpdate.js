@@ -1,98 +1,87 @@
-/*
-import React, { useState, useEffect } from 'react'
+
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getInventarioPorId, actualizarInventario } from '../../services/inventarioService';
-import { getEstados } from '../../services/estadoService';
-import { getMarcas } from '../../services/marcaService';
-import { getTipos } from '../../services/tipoService';
-import { getUsuarios } from '../../services/usuarioService';
 import Swal from 'sweetalert2';
+import { getDirector } from '../../services/directorService';
+import { getGeneros } from '../../services/generoService';
+import { actualizarMedia, getMediaPorId } from '../../services/mediaService';
+import { getProductoras } from '../../services/productoraService';
+import { getTipos } from '../../services/tipoService';
 
-export const InventarioUpdate = () => {
+export const MediaUpdate = () => {
 
-    const { inventarioId = '' } = useParams();
-    const [ inventario, setInventario ] = useState();
-    const [usuarios, setUsuarios ] = useState([]);
-    const [marcas, setMarcas ] = useState([]);
+    const { mediaId = '' } = useParams();
+    const [ media, setMedia ] = useState();
+    const [directogetDirector, setDirectogetDirector ] = useState([]);
+    const [generos, setGeneros ] = useState([]);
     const [tipos, setTipos ] = useState([]);
-    const [estados, setEstados ] = useState([]);
+    const [productoras, setProductoras ] = useState([]);
     const [ valoresForm, setValoresForm ] = useState([]);
     const { serial = '', modelo = '', descripcion = '', color = '',
-        foto = '', fechaCompra = '', precio = '', usuario, marca, tipo, estado } = valoresForm
+        foto = '', fechaCompra = '', precio = '', director, genero, tipo, productora } = valoresForm
 
-
-
-        const listarUsuarios = async () => {
-            try{
-                const { data } = await getUsuarios();
-                setUsuarios(data);
-    
-            } catch(error) {
-                console.log(error);
-            }
+    const listarDirectogetDirector = async () => {
+        try{
+            const { data } = await getDirector();
+            setDirectogetDirector(data);
+        } catch(error) {
+            console.log(error);
         }
-    
-        useEffect(() => {
-            listarUsuarios();
-        }, []);
-    
-    
-        const listarMarcas = async () => {
-            try{
-                const { data } = await getMarcas();
-                setMarcas(data);
-    
-            } catch(error) {
-                console.log(error);
-            }
-        }
-    
-        useEffect(() => {
-            listarMarcas();
-        }, []);
-    
-    
-        const listarTipos = async () => {
-            try{
-                const { data } = await getTipos();
-                setTipos(data);
-    
-            } catch(error) {
-                console.log(error);
-            }
-        }
-    
-        useEffect(() => {
-            listarTipos();
-        }, []);
-    
-    
-        const listarEstados = async () => {
-            try{
-                const { data } = await getEstados();
-                setEstados(data);
-    
-            } catch(error) {
-                console.log(error);
-            }
-        }
-    
-        useEffect(() => {
-            listarEstados();
-        }, []);
-        
+    }
 
+    useEffect(() => {
+        listarDirectogetDirector();
+    }, []);
 
-    const getInventario = async () => {
+    const listarGeneros = async () => {
+        try{
+            const { data } = await getGeneros();
+            setGeneros(data);
+        } catch(error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        listarGeneros();
+    }, []);
+
+    const listarTipos = async () => {
+        try{
+            const { data } = await getTipos();
+            setTipos(data);
+        } catch(error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        listarTipos();
+    }, []);
+
+    const listarProductoras = async () => {
+        try{
+            const { data } = await getProductoras();
+            setProductoras(data);
+        } catch(error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        listarProductoras();
+    }, []);
+
+    const getMedia = async () => {
         try {
             Swal.fire({
                 allowOutsideClick: false,
                 text: 'Cargando...'
             });
             Swal.showLoading();
-            const { data } = await getInventarioPorId(inventarioId);
+            const { data } = await getMediaPorId(mediaId);
             console.log(data);
-            setInventario(data);
+            setMedia(data);
             Swal.close();
         } catch(error) {
             console.log(error);
@@ -101,28 +90,26 @@ export const InventarioUpdate = () => {
     }
 
     useEffect(() => {
-        getInventario();
-    }, [inventarioId]);
-
+        getMedia();
+    }, [mediaId]);
 
     useEffect(() => {
-        if(inventario) {
+        if(media) {
             setValoresForm({
-                serial: inventario.serial,
-                modelo: inventario.modelo,
-                descripcion: inventario.descripcion,
-                color: inventario.color,
-                foto: inventario.foto,
-                fechaCompra: inventario.fechaCompra,
-                precio: inventario.precio,
-                usuario: inventario.usuario,
-                marca: inventario.marca,
-                tipo: inventario.tipoEquipo,
-                estado: inventario.estadoEquipo
+                serial: media.serial,
+                modelo: media.modelo,
+                descripcion: media.descripcion,
+                color: media.color,
+                foto: media.foto,
+                fechaCompra: media.fechaCompra,
+                precio: media.precio,
+                director: media.director,
+                genero: media.genero,
+                tipo: media.tipoEquipo,
+                productora: media.productora
             });
         }
-    }, [ inventario ])
-
+    }, [ media ])
 
     const handleOnChange = ({ target }) => {
         const { name, value } = target;
@@ -132,30 +119,30 @@ export const InventarioUpdate = () => {
     const handleOnSubmit = async (e) => {
         e.preventDefault();
 
-        const inventario = {
+        const media = {
             serial, modelo, descripcion, color, foto,
             fechaCompra, precio,
-            usuario: {
-                _id: usuario
+            director: {
+                _id: director
             },
-            marca: {
-                _id: marca
+            genero: {
+                _id: genero
             },
             tipoEquipo:{
                 _id: tipo
             },
-            estadoEquipo: {
-                _id: estado
+            productora: {
+                _id: productora
             }
         }
-        console.log(inventario);
+        console.log(media);
         try {
             Swal.fire({
                 allowOutsideClick: false,
                 text: 'Cargando...'
             });
             Swal.showLoading();
-            const { data } = await actualizarInventario(inventarioId, inventario);
+            const { data } = await actualizarMedia(mediaId, media);
             Swal.close();
 
         } catch(error) {
@@ -169,184 +156,181 @@ export const InventarioUpdate = () => {
             }
             Swal.fire('Error', mensaje, 'error');
         }
-        
     }
 
-
-  return (
-    <div className='container-fluid mt-3 mb-2'>
-      <div className='card'>
-        <div className='card-header'>
-            <h5 className='card-title'>Detalle Activo</h5>
-        </div>  
-        <div className='card-body'>
-            <div className='row'>
-                <div className='col-md-4'>
-                    <img src={inventario?.foto} />
-                </div>
-                <div className='col-md-8'>
-                <form onSubmit={(e) => handleOnSubmit(e) }>
+    return (
+        <div className='container-fluid mt-3 mb-2'>
+            <div className='card'>
+                <div className='card-header'>
+                    <h5 className='card-title'>Detalle Media</h5>
+                </div>  
+                <div className='card-body'>
                     <div className='row'>
-
-                        <div className='col'>
-                            <div className="mb-3">
-                                <label className="form-label">Serial</label>
-                                <input type="text" name='serial' 
-                                value= {serial}
-                                onChange={e => handleOnChange(e)}
-                                required 
-                                className='form-control' />
-                            </div>
+                        <div className='col-md-4'>
+                            <img src={media?.foto} />
                         </div>
+                        <div className='col-md-8'>
+                            <form onSubmit={(e) => handleOnSubmit(e) }>
+                                <div className='row'>
 
-                        <div className='col'>
-                            <div className="mb-3">
-                                <label  className="form-label">Modelo </label>
-                                <input type="text" name='modelo' 
-                                value={modelo}
-                                onChange={e => handleOnChange(e)}
-                                required 
-                                className='form-control' />
-                            </div>
-                        </div>
+                                    <div className='col'>
+                                        <div className="mb-3">
+                                            <label className="form-label">Serial</label>
+                                            <input type="text" name='serial' 
+                                            value= {serial}
+                                            onChange={e => handleOnChange(e)}
+                                            required 
+                                            className='form-control' />
+                                        </div>
+                                    </div>
 
-                        <div className='col'>
-                            <div className="mb-3">
-                                <label  className="form-label">Descripción </label>
-                                <input type="text" name='descripcion' 
-                                value={descripcion}
-                                onChange={e => handleOnChange(e)}
-                                required 
-                                className='form-control' />
-                            </div>
-                        </div>
+                                    <div className='col'>
+                                        <div className="mb-3">
+                                            <label  className="form-label">Modelo </label>
+                                            <input type="text" name='modelo' 
+                                            value={modelo}
+                                            onChange={e => handleOnChange(e)}
+                                            required 
+                                            className='form-control' />
+                                        </div>
+                                    </div>
 
-                        <div className='col'>
-                            <div className="mb-3">
-                                <label  className="form-label">Color </label>
-                                <input type="text" name='color' 
-                                value={color}
-                                onChange={e => handleOnChange(e)}
-                                required 
-                                className='form-control' />
-                            </div>
+                                    <div className='col'>
+                                        <div className="mb-3">
+                                            <label  className="form-label">Descripción </label>
+                                            <input type="text" name='descripcion' 
+                                            value={descripcion}
+                                            onChange={e => handleOnChange(e)}
+                                            required 
+                                            className='form-control' />
+                                        </div>
+                                    </div>
+
+                                    <div className='col'>
+                                        <div className="mb-3">
+                                            <label  className="form-label">Color </label>
+                                            <input type="text" name='color' 
+                                            value={color}
+                                            onChange={e => handleOnChange(e)}
+                                            required 
+                                            className='form-control' />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className='row'>
+                                    <div className='col'>
+                                        <div className="mb-3">
+                                            <label  className="form-label">Foto </label>
+                                            <input type="text" name='foto'
+                                            value={foto} 
+                                            onChange={e => handleOnChange(e)}
+                                            required 
+                                            className='form-control' />
+                                        </div>
+                                    </div>
+                                    <div className='col'>
+                                        <div className="mb-3">
+                                            <label  className="form-label">Fecha Compra </label>
+                                            <input type="date" name='fechaCompra' 
+                                            value={fechaCompra}
+                                            onChange={e => handleOnChange(e)}
+                                            required 
+                                            className='form-control' />
+                                        </div>
+                                    </div>
+                                    <div className='col'>
+                                        <div className="mb-3">
+                                            <label  className="form-label">Precio </label>
+                                            <input type="number" name='precio' 
+                                            value={precio}
+                                            onChange={e => handleOnChange(e)}
+                                            required 
+                                            className='form-control' />
+                                        </div>
+                                    </div>
+                                    <div className='col'>
+                                        <div className="mb-3">
+                                            <label  className="form-label">Director </label>
+                                            <select className='form-select'
+                                            required
+                                            name= 'director'
+                                            value={director}
+                                            onChange={e => handleOnChange(e)}>
+                                            <option value="">--SELECCIONE--</option>
+                                                {
+                                                    directogetDirector.map(({ _id, nombre }) => {
+                                                        return <option key={_id} value={_id}>{nombre}</option>
+                                                    }) 
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className='row'>
+                                    <div className='col'>
+                                        <div className="mb-3">
+                                            <label  className="form-label">Género </label>
+                                            <select className='form-select'
+                                            required
+                                            name= 'genero'
+                                            value={genero}
+                                            onChange={e => handleOnChange(e)}>
+                                            <option value="">--SELECCIONE--</option>
+                                                {
+                                                    generos.map(({ _id, nombre }) => {
+                                                        return <option key={_id} value={_id}>{nombre}</option>
+                                                    }) 
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className='col'>
+                                        <div className="mb-3">
+                                            <label  className="form-label">Tipo Equipo</label>
+                                            <select className='form-select'
+                                            required
+                                            name= 'tipo'
+                                            value={tipo}
+                                            onChange={e => handleOnChange(e)}>
+                                            <option value="">--SELECCIONE--</option>
+                                                {
+                                                    tipos.map(({ _id, nombre }) => {
+                                                        return <option key={_id} value={_id}>{nombre}</option>
+                                                    }) 
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className='col'>
+                                        <div className="mb-3">
+                                            <label  className="form-label">Productora</label>
+                                            <select className='form-select'
+                                            required
+                                            name= 'productora'
+                                            value={productora}
+                                            onChange={e => handleOnChange(e)}>
+                                            <option value="">--SELECCIONE--</option>
+                                                {
+                                                    productoras.map(({ _id, nombre }) => {
+                                                        return <option key={_id} value={_id}>{nombre}</option>
+                                                    }) 
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='row'>
+                                    <div className='col'>
+                                        <button className="btn btn-primary">Guardar</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
-
-                    <div className='row'>
-                        <div className='col'>
-                            <div className="mb-3">
-                                <label  className="form-label">Foto </label>
-                                <input type="text" name='foto'
-                                value={foto} 
-                                onChange={e => handleOnChange(e)}
-                                required 
-                                className='form-control' />
-                            </div>
-                        </div>
-                        <div className='col'>
-                            <div className="mb-3">
-                                <label  className="form-label">Fecha Compra </label>
-                                <input type="date" name='fechaCompra' 
-                                value={fechaCompra}
-                                onChange={e => handleOnChange(e)}
-                                required 
-                                className='form-control' />
-                            </div>
-                        </div>
-                        <div className='col'>
-                            <div className="mb-3">
-                                <label  className="form-label">Precio </label>
-                                <input type="number" name='precio' 
-                                value={precio}
-                                onChange={e => handleOnChange(e)}
-                                required 
-                                className='form-control' />
-                            </div>
-                        </div>
-                        <div className='col'>
-                            <div className="mb-3">
-                                <label  className="form-label">Usuario </label>
-                                <select className='form-select'
-                                required
-                                name= 'usuario'
-                                value={usuario}
-                                onChange={e => handleOnChange(e)}>
-                                <option value="">--SELECCIONE--</option>
-                                    {
-                                        usuarios.map(({ _id, nombre }) => {
-                                            return <option key={_id} value={_id}>{nombre}</option>
-                                        }) 
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className='row'>
-                        <div className='col'>
-                            <div className="mb-3">
-                                <label  className="form-label">Marca </label>
-                                <select className='form-select'
-                                required
-                                name= 'marca'
-                                value={marca}
-                                onChange={e => handleOnChange(e)}>
-                                <option value="">--SELECCIONE--</option>
-                                    {
-                                        marcas.map(({ _id, nombre }) => {
-                                            return <option key={_id} value={_id}>{nombre}</option>
-                                        }) 
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                        <div className='col'>
-                            <div className="mb-3">
-                                <label  className="form-label">Tipo Equipo</label>
-                                <select className='form-select'
-                                required
-                                name= 'tipo'
-                                value={tipo}
-                                onChange={e => handleOnChange(e)}>
-                                <option value="">--SELECCIONE--</option>
-                                    {
-                                        tipos.map(({ _id, nombre }) => {
-                                            return <option key={_id} value={_id}>{nombre}</option>
-                                        }) 
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                        <div className='col'>
-                            <div className="mb-3">
-                                <label  className="form-label">Estado Equipo</label>
-                                <select className='form-select'
-                                required
-                                name= 'estado'
-                                value={estado}
-                                onChange={e => handleOnChange(e)}>
-                                <option value="">--SELECCIONE--</option>
-                                    {
-                                        estados.map(({ _id, nombre }) => {
-                                            return <option key={_id} value={_id}>{nombre}</option>
-                                        }) 
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='row'>
-                        <div className='col'>
-                            <button className="btn btn-primary">Guardar</button>
-                        </div>
-                        
-                    </div>
-                </form>
-                </div>
+                </div>    
             </div>
-        </div>    
-      </div>
-    </div>
-  )
-}*/
+        </div>
+    )
+}

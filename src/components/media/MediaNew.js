@@ -127,7 +127,7 @@ useEffect(() => {
 
                 <div className='col'>
                     <div className='sidebar-header'>
-                        <h3>Nuevo Media</h3>
+                        <h3>Crear Media</h3>
                         <i className="fa-solid fa-xmark" onClick={ handleOpenModal }> </i>
                     </div>
                 </div>
@@ -210,7 +210,7 @@ useEffect(() => {
                         <div className='col'>
                             <div className="mb-3">
                                 <label  className="form-label">fecha Actualizacion </label>
-                                <input type="number" name='fechaActualizacion' 
+                                <input type="date" name='fechaActualizacion' 
                                 value={fechaActualizacion}
                                 onChange={e => handleOnChange(e)}
                                 required 
@@ -256,7 +256,7 @@ useEffect(() => {
                         </div>
                         <div className='col'>
                             <div className="mb-3">
-                                <label  className="form-label">Tipo Equipo</label>
+                                <label  className="form-label">Tipo </label>
                                 <select className='form-select'
                                 required
                                 name= 'tipo'
@@ -273,7 +273,7 @@ useEffect(() => {
                         </div>
                         <div className='col'>
                             <div className="mb-3">
-                                <label  className="form-label">Director Equipo</label>
+                                <label  className="form-label">Director</label>
                                 <select className='form-select'
                                 required
                                 name= 'dierector'
